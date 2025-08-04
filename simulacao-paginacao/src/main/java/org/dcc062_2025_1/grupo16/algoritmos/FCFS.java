@@ -14,12 +14,9 @@ public class FCFS implements AlgoritmoSubstituicao {
         Queue<Integer> ordem = new LinkedList<>();
         int pageFaults = 0;
 
-        // Itera sobre cada página solicitada
         for (int pagina : paginas) {
-            // Verifica se a página não está na memória
             if (!frames.contains(pagina)) {
                 if (frames.size() >= numeroFrames) {
-                    // Remove a página mais antiga (primeira da fila)
                     int removida = ordem.poll();
                     frames.remove(removida);
                 }
@@ -27,7 +24,6 @@ public class FCFS implements AlgoritmoSubstituicao {
                 ordem.add(pagina);
                 pageFaults++;
             }
-            // Exibe o estado atual da memória
             System.out.println("Página: " + pagina + " → Memória: " + frames);
         }
         System.out.println("FCFS - Total de page faults: " + pageFaults + "\n");
