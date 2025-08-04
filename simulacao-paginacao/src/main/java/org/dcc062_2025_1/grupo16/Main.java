@@ -8,7 +8,13 @@ import org.dcc062_2025_1.grupo16.algoritmos.LRU;
 public class Main {
 
     public static void main(String[] args) {
-        simula(args[0].trim());
+        if (args.length == 0) {
+            simulaTodos();
+        } else {
+            for (String arg : args) {
+                simula(arg);
+            }
+        }
     }
 
     private static void simula(String algoritmo) {
