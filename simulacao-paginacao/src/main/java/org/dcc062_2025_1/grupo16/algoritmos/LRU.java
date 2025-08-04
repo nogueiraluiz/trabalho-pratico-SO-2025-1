@@ -42,6 +42,7 @@ public class LRU implements AlgoritmoSubstituicao {
 
         // Printa o total de falhas
         System.out.println("Page faults (LRU): " + faults);
+        System.out.println("Total de swaps: " + (faults - buffer.size()));
     }
 
     @Override
