@@ -4,11 +4,14 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
+import lombok.SneakyThrows;
 import org.dcc062_2025_1.grupo16.Resultado;
+import org.dcc062_2025_1.grupo16.util.Constantes;
 
 public class FCFS implements AlgoritmoSubstituicao {
 
     @Override
+    @SneakyThrows
     public Resultado simula(int[] paginas, int numeroFrames) {
         Set<Integer> frames = new HashSet<>();
         Queue<Integer> ordem = new LinkedList<>();
@@ -27,6 +30,7 @@ public class FCFS implements AlgoritmoSubstituicao {
                 pageFaults++;
             }
             System.out.println("Página: " + pagina + " → Memória: " + frames);
+            Thread.sleep(Constantes.MILISSEGUNDOS_SLEEP_ITERACOES);
         }
 
         long tempoExecucao = System.currentTimeMillis() - tempoInicio;

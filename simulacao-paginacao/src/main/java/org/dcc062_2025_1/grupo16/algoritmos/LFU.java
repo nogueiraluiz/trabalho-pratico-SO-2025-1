@@ -4,11 +4,14 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import lombok.SneakyThrows;
 import org.dcc062_2025_1.grupo16.Resultado;
+import org.dcc062_2025_1.grupo16.util.Constantes;
 
 public class LFU implements AlgoritmoSubstituicao {
 
     @Override
+    @SneakyThrows
     public Resultado simula(int[] paginas, int numeroFrames) {
         Set<Integer> frames = new LinkedHashSet<>();
         Map<Integer, Integer> frequencias = new HashMap<>();
@@ -45,6 +48,7 @@ public class LFU implements AlgoritmoSubstituicao {
             }
 
             System.out.println("Memória: " + frames + " | Frequências: " + frequencias);
+            Thread.sleep(Constantes.MILISSEGUNDOS_SLEEP_ITERACOES);
         }
 
         var swaps = pageFaults - frames.size();

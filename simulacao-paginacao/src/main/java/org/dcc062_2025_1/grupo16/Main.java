@@ -2,6 +2,7 @@ package org.dcc062_2025_1.grupo16;
 
 import java.util.Random;
 import java.util.Scanner;
+import lombok.SneakyThrows;
 import org.dcc062_2025_1.grupo16.algoritmos.AlgoritmoSubstituicao;
 import org.dcc062_2025_1.grupo16.algoritmos.FCFS;
 import org.dcc062_2025_1.grupo16.algoritmos.LFU;
@@ -90,9 +91,11 @@ public class Main {
         simula(new LFU(), sequencia, numeroFrames);
     }
 
+    @SneakyThrows
     private static void simula(AlgoritmoSubstituicao algoritmo, int[] sequencia, int numeroFrames) {
         Resultado resultado = algoritmo.simula(sequencia, numeroFrames);
         observador.registraResultado(algoritmo.getNomeAlgoritmo(), resultado);
+        Thread.sleep(3000);
     }
 
     private static int[] geraSequenciaAleatoria(int numeroPaginas, int tamanho) {
