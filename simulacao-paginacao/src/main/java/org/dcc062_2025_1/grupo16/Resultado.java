@@ -4,10 +4,12 @@ public class Resultado {
 
     private final int pageFaults;
     private final int swaps;
+    private final long tempoExecucao; // tempo em milissegundos
 
-    public Resultado(String algoritmo, int pageFaults, int swaps) {
+    public Resultado(String algoritmo, int pageFaults, int swaps, long tempoExecucao) {
         this.pageFaults = pageFaults;
         this.swaps = swaps;
+        this.tempoExecucao = tempoExecucao;
     }
 
     public int getPageFaults() {
@@ -16,5 +18,9 @@ public class Resultado {
 
     public int getSwaps() {
         return swaps;
+    }
+    
+    public long getTempoExecucao() {
+        return tempoExecucao;
     }
 }

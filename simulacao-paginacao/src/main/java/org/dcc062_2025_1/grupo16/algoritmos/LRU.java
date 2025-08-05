@@ -14,6 +14,7 @@ public class LRU implements AlgoritmoSubstituicao {
         int swaps = 0;
         
         System.out.println("Simulando LRU com " + numeroFrames + " frames...");
+        long tempoInicio = System.currentTimeMillis();
 
         for (int pagina : paginas) {
             if (frames.containsKey(pagina)) {
@@ -35,10 +36,13 @@ public class LRU implements AlgoritmoSubstituicao {
             System.out.println("Memória: " + frames.keySet());
         }
         
-        System.out.println("\nLRU - Total de page faults: " + pageFaults);
-        System.out.println("Total de swaps: " + swaps + "\n");
+        long tempoExecucao = System.currentTimeMillis() - tempoInicio;
         
-        return new Resultado(getNomeAlgoritmo(), pageFaults, swaps);
+        System.out.println("\nLRU - Total de page faults: " + pageFaults);
+        System.out.println("Total de swaps: " + swaps);
+        System.out.println("Tempo de execução: " + tempoExecucao + " ms\n");
+        
+        return new Resultado(getNomeAlgoritmo(), pageFaults, swaps, tempoExecucao);
     }
 
     @Override

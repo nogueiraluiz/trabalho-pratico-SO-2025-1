@@ -13,9 +13,9 @@ public class LFU implements AlgoritmoSubstituicao {
         Set<Integer> frames = new LinkedHashSet<>();
         Map<Integer, Integer> frequencias = new HashMap<>();
         int pageFaults = 0;
-        int swaps = 0;
 
         System.out.println("Simulando LFU com " + numeroFrames + " frames...");
+        long tempoInicio = System.currentTimeMillis();
 
         for (int pagina : paginas) {
             if (frames.contains(pagina)) {
@@ -38,7 +38,6 @@ public class LFU implements AlgoritmoSubstituicao {
 
                     frames.remove(paginaParaRemover);
                     frequencias.remove(paginaParaRemover);
-                    swaps++;
                 }
 
                 frames.add(pagina);
@@ -48,10 +47,14 @@ public class LFU implements AlgoritmoSubstituicao {
             System.out.println("Memória: " + frames + " | Frequências: " + frequencias);
         }
 
+        var swaps = pageFaults - frames.size();
+        long tempoExecucao = System.currentTimeMillis() - tempoInicio;
+
         System.out.println("\nLFU - Total de page faults: " + pageFaults);
-        System.out.println("Total de swaps: " + swaps + "\n");
+        System.out.println("Total de swaps: " + swaps);
+        System.out.println("Tempo de execução: " + tempoExecucao + " ms\n");
         
-        return new Resultado(getNomeAlgoritmo(), pageFaults, swaps);
+        return new Resultado(getNomeAlgoritmo(), pageFaults, swaps, tempoExecucao);
     }
 
     @Override

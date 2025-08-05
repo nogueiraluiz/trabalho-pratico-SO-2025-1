@@ -26,12 +26,14 @@ public class Observador {
         }
         
         System.out.println("\n===== COMPARAÇÃO DE RESULTADOS =====");
-        System.out.println("Algoritmo\tPage Faults\tSwaps");
+        System.out.println("Algoritmo\tPage Faults\tSwaps\t\tTempo (ms)");
         
         String menosPageFaults = null;
         String menosSwaps = null;
+        String maisRapido = null;
         int minPageFaults = Integer.MAX_VALUE;
         int minSwaps = Integer.MAX_VALUE;
+        long minTempo = Long.MAX_VALUE;
         
         List<Entry<String, Resultado>> sortedEntries = new java.util.ArrayList<>(results.entrySet());
         sortedEntries.sort(Comparator.comparingInt(e -> e.getValue().getPageFaults()));
@@ -40,7 +42,8 @@ public class Observador {
             String algoritmo = entry.getKey();
             Resultado resultado = entry.getValue();
             
-            System.out.println(algoritmo + "\t\t" + resultado.getPageFaults() + "\t\t" + resultado.getSwaps());
+            System.out.println(algoritmo + "\t\t" + resultado.getPageFaults() + "\t\t" + 
+                              resultado.getSwaps() + "\t\t" + resultado.getTempoExecucao());
             
             if (resultado.getPageFaults() < minPageFaults) {
                 minPageFaults = resultado.getPageFaults();
@@ -51,10 +54,16 @@ public class Observador {
                 minSwaps = resultado.getSwaps();
                 menosSwaps = algoritmo;
             }
+            
+            if (resultado.getTempoExecucao() < minTempo) {
+                minTempo = resultado.getTempoExecucao();
+                maisRapido = algoritmo;
+            }
         }
         
         System.out.println("\nMelhor algoritmo em termos de page faults: " + menosPageFaults + " (" + minPageFaults + " page faults)");
         System.out.println("Melhor algoritmo em termos de swaps: " + menosSwaps + " (" + minSwaps + " swaps)");
+        System.out.println("Algoritmo mais rápido: " + maisRapido + " (" + minTempo + " ms)");
         System.out.println("=====================================\n");
     }
 
