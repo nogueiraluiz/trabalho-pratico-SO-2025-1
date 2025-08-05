@@ -20,12 +20,15 @@ public class LRU implements AlgoritmoSubstituicao {
         long tempoInicio = System.currentTimeMillis();
 
         for (int pagina : paginas) {
-            if (frames.containsKey(pagina)) {
-                System.out.print("Página: " + pagina + " (HIT)  → ");
+            boolean isHit = frames.containsKey(pagina);
+            
+            System.out.print(Constantes.formatarPagina(pagina) + " ");
+            System.out.print(Constantes.formatarStatus(isHit) + " → ");
+            
+            if (isHit) {
                 frames.put(pagina, 1);
             } else {
                 pageFaults++;
-                System.out.print("Página: " + pagina + " (FAULT)→ ");
                 
                 if (frames.size() >= numeroFrames) {
                     Integer paginaRemovida = frames.keySet().iterator().next();
@@ -36,7 +39,7 @@ public class LRU implements AlgoritmoSubstituicao {
                 frames.put(pagina, 1);
             }
 
-            System.out.println("Memória: " + frames.keySet());
+            System.out.println("Memória: " + String.format("%-" + Constantes.LARGURA_MEMORIA + "s", frames.keySet()));
             Thread.sleep(Constantes.MILISSEGUNDOS_SLEEP_ITERACOES);
         }
         
@@ -44,7 +47,7 @@ public class LRU implements AlgoritmoSubstituicao {
         
         System.out.println("\nLRU - Total de page faults: " + pageFaults);
         System.out.println("Total de swaps: " + swaps);
-        System.out.println("Tempo de execução: " + tempoExecucao + " ms\n");
+//        System.out.println("Tempo de execução: " + tempoExecucao + " ms\n");
         
         return new Resultado(getNomeAlgoritmo(), pageFaults, swaps, tempoExecucao);
     }

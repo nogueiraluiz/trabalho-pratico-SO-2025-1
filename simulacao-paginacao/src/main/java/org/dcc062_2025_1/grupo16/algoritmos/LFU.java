@@ -21,12 +21,15 @@ public class LFU implements AlgoritmoSubstituicao {
         long tempoInicio = System.currentTimeMillis();
 
         for (int pagina : paginas) {
-            if (frames.contains(pagina)) {
+            boolean isHit = frames.contains(pagina);
+            
+            System.out.print(Constantes.formatarPagina(pagina) + " ");
+            System.out.print(Constantes.formatarStatus(isHit) + " → ");
+            
+            if (isHit) {
                 frequencias.put(pagina, frequencias.get(pagina) + 1);
-                System.out.print("Página: " + pagina + " (HIT)  → ");
             } else {
                 pageFaults++;
-                System.out.print("Página: " + pagina + " (FAULT)→ ");
 
                 if (frames.size() >= numeroFrames) {
                     int paginaParaRemover = -1;
@@ -47,7 +50,8 @@ public class LFU implements AlgoritmoSubstituicao {
                 frequencias.put(pagina, 1);
             }
 
-            System.out.println("Memória: " + frames + " | Frequências: " + frequencias);
+            System.out.print("Memória: " + String.format("%-" + Constantes.LARGURA_MEMORIA + "s", frames));
+            System.out.println(" | Frequências: " + String.format("%-" + Constantes.LARGURA_FREQUENCIA + "s", frequencias));
             Thread.sleep(Constantes.MILISSEGUNDOS_SLEEP_ITERACOES);
         }
 
@@ -56,7 +60,7 @@ public class LFU implements AlgoritmoSubstituicao {
 
         System.out.println("\nLFU - Total de page faults: " + pageFaults);
         System.out.println("Total de swaps: " + swaps);
-        System.out.println("Tempo de execução: " + tempoExecucao + " ms\n");
+//        System.out.println("Tempo de execução: " + tempoExecucao + " ms\n");
         
         return new Resultado(getNomeAlgoritmo(), pageFaults, swaps, tempoExecucao);
     }

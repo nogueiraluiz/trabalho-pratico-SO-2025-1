@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import org.dcc062_2025_1.grupo16.util.Constantes;
 
 public class Observador {
 
@@ -27,7 +28,9 @@ public class Observador {
         System.out.println("Resultados obtidos com simulações com " + numeroDePaginas + " páginas, " + numeroDeFrames
                 + " frames e " + tamanhoSequencia + " referências.");
         System.out.println("\n===== COMPARAÇÃO DE RESULTADOS =====");
-        System.out.println("Algoritmo\tPage Faults\tSwaps\t\tTempo (ms)");
+        System.out.printf("%-" + Constantes.LARGURA_ALGORITMO + "s%-" +
+                Constantes.LARGURA_PAGE_FAULTS + "s%-" + Constantes.LARGURA_SWAPS + "s%n",
+                "Algoritmo", "Page Faults", "Swaps");
 
         String menosPageFaults = null;
         String menosSwaps = null;
@@ -43,8 +46,9 @@ public class Observador {
             String algoritmo = entry.getKey();
             Resultado resultado = entry.getValue();
 
-            System.out.println(algoritmo + "\t\t" + resultado.getPageFaults() + "\t\t" +
-                    resultado.getSwaps() + "\t\t" + resultado.getTempoExecucao());
+            System.out.printf("%-" + Constantes.LARGURA_ALGORITMO + "s%-" +
+                    Constantes.LARGURA_PAGE_FAULTS + "d%-" + Constantes.LARGURA_SWAPS + "d%n",
+                    algoritmo, resultado.getPageFaults(), resultado.getSwaps());
 
             if (resultado.getPageFaults() < minPageFaults) {
                 minPageFaults = resultado.getPageFaults();
