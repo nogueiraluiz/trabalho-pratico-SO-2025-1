@@ -28,8 +28,11 @@ public class FCFS implements AlgoritmoSubstituicao {
                 frames.add(pagina);
                 ordem.add(pagina);
                 pageFaults++;
+                System.out.print("Página: " + pagina + " (FAULT)→ ");
+            } else {
+                System.out.print("Página: " + pagina + " (HIT)  → ");
             }
-            System.out.println("Página: " + pagina + " → Memória: " + frames);
+            System.out.println("Memória: " + frames);
             Thread.sleep(Constantes.MILISSEGUNDOS_SLEEP_ITERACOES);
         }
 
