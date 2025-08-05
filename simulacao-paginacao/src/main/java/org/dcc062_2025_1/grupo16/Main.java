@@ -47,13 +47,13 @@ public class Main {
 
             if (args.length == 0) {
                 simulaTodos(sequencia, numeroFrames);
-                observador.comparaResultados();
+                observador.comparaResultados(numeroPaginas, numeroFrames, tamanhoSequencia);
             } else {
                 for (String arg : args) {
                     simula(arg, sequencia, numeroFrames);
                 }
                 if (args.length > 1) {
-                    observador.comparaResultados();
+                    observador.comparaResultados(numeroPaginas, numeroFrames, tamanhoSequencia);
                 }
             }
         } catch (IllegalArgumentException e) {
