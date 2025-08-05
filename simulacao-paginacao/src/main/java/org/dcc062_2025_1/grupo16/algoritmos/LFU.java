@@ -4,11 +4,12 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import org.dcc062_2025_1.grupo16.Resultado;
 
 public class LFU implements AlgoritmoSubstituicao {
 
     @Override
-    public void simula(int[] paginas, int numeroFrames) {
+    public Resultado simula(int[] paginas, int numeroFrames) {
         Set<Integer> frames = new LinkedHashSet<>();
         Map<Integer, Integer> frequencias = new HashMap<>();
         int pageFaults = 0;
@@ -49,6 +50,8 @@ public class LFU implements AlgoritmoSubstituicao {
 
         System.out.println("\nLFU - Total de page faults: " + pageFaults);
         System.out.println("Total de swaps: " + swaps + "\n");
+        
+        return new Resultado(getNomeAlgoritmo(), pageFaults, swaps);
     }
 
     @Override

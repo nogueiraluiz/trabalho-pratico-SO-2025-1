@@ -1,18 +1,20 @@
 package org.dcc062_2025_1.grupo16.algoritmos;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Set;
+import org.dcc062_2025_1.grupo16.Resultado;
 
-/**
- * Implementação da simulação do algoritmo FCFS (First-Come, First-Served).
- * Este algoritmo substitui páginas na ordem em que elas chegam.
- */
 public class FCFS implements AlgoritmoSubstituicao {
 
     @Override
-    public void simula(int[] paginas, int numeroFrames) {
+    public Resultado simula(int[] paginas, int numeroFrames) {
         Set<Integer> frames = new HashSet<>();
         Queue<Integer> ordem = new LinkedList<>();
         int pageFaults = 0;
+
+        System.out.println("Simulando FCFS com " + numeroFrames + " frames...");
 
         for (int pagina : paginas) {
             if (!frames.contains(pagina)) {
@@ -26,8 +28,13 @@ public class FCFS implements AlgoritmoSubstituicao {
             }
             System.out.println("Página: " + pagina + " → Memória: " + frames);
         }
-        System.out.println("FCFS - Total de page faults: " + pageFaults + "\n");
-        System.out.println("Total de swaps: " + (pageFaults - frames.size()) + "\n");
+        
+        int swaps = pageFaults - frames.size();
+        
+        System.out.println("\nFCFS - Total de page faults: " + pageFaults);
+        System.out.println("Total de swaps: " + swaps + "\n");
+        
+        return new Resultado(getNomeAlgoritmo(), pageFaults, swaps);
     }
 
     @Override

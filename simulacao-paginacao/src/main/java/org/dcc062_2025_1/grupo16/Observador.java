@@ -1,0 +1,65 @@
+package org.dcc062_2025_1.grupo16;
+
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+public class Observador {
+    
+    private final Map<String, Resultado> results;
+    
+    public Observador() {
+        this.results = new HashMap<>();
+    }
+
+    public void registraResultado(String algoritmo, Resultado result) {
+        results.put(algoritmo, result);
+    }
+    
+
+    public void comparaResultados() {
+        if (results.isEmpty()) {
+            System.out.println("Não há resultados para comparar.");
+            return;
+        }
+        
+        System.out.println("\n===== COMPARAÇÃO DE RESULTADOS =====");
+        System.out.println("Algoritmo\tPage Faults\tSwaps");
+        
+        String menosPageFaults = null;
+        String menosSwaps = null;
+        int minPageFaults = Integer.MAX_VALUE;
+        int minSwaps = Integer.MAX_VALUE;
+        
+        List<Entry<String, Resultado>> sortedEntries = new java.util.ArrayList<>(results.entrySet());
+        sortedEntries.sort(Comparator.comparingInt(e -> e.getValue().getPageFaults()));
+        
+        for (Map.Entry<String, Resultado> entry : sortedEntries) {
+            String algoritmo = entry.getKey();
+            Resultado resultado = entry.getValue();
+            
+            System.out.println(algoritmo + "\t\t" + resultado.getPageFaults() + "\t\t" + resultado.getSwaps());
+            
+            if (resultado.getPageFaults() < minPageFaults) {
+                minPageFaults = resultado.getPageFaults();
+                menosPageFaults = algoritmo;
+            }
+            
+            if (resultado.getSwaps() < minSwaps) {
+                minSwaps = resultado.getSwaps();
+                menosSwaps = algoritmo;
+            }
+        }
+        
+        System.out.println("\nMelhor algoritmo em termos de page faults: " + menosPageFaults + " (" + minPageFaults + " page faults)");
+        System.out.println("Melhor algoritmo em termos de swaps: " + menosSwaps + " (" + minSwaps + " swaps)");
+        System.out.println("=====================================\n");
+    }
+
+    public void limpaResultados() {
+        results.clear();
+    }
+
+}
