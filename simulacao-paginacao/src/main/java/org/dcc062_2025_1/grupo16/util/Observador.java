@@ -80,6 +80,11 @@ public class Observador {
             }
 
         }
+
+        if (resultados.size() == 1) {
+            System.out.println("Somente um algoritmo foi executado.");
+            return;
+        }
         
         System.out.println("\nMelhor algoritmo em termos de page faults: " + menosPageFaults + " (" + minPageFaults + " page faults)");
         System.out.println("Melhor algoritmo em termos de swaps: " + menosSwaps + " (" + minSwaps + " swaps)");
