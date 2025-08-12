@@ -1,7 +1,7 @@
 package org.dcc062_2025_1.grupo16;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
@@ -57,17 +57,11 @@ public class Main {
             }
             System.out.println("\n");
 
-            if (args.length == 0) {
-                simulaTodos(sequencia, numeroFrames, usaSleeps);
-                observador.comparaResultados(numeroPaginas, numeroFrames, tamanhoSequencia);
-            } else {
-                for (String arg : algoritmos) {
-                    simula(arg, sequencia, numeroFrames, usaSleeps);
-                }
-                if (args.length > 1) {
-                    observador.comparaResultados(numeroPaginas, numeroFrames, tamanhoSequencia);
-                }
+            for (String arg : algoritmos) {
+                simula(arg, sequencia, numeroFrames, usaSleeps);
             }
+            observador.comparaResultados(numeroPaginas, numeroFrames, tamanhoSequencia);
+
         } catch (IllegalArgumentException e) {
             System.out.println("Erro: " + e.getMessage());
         } catch (java.util.InputMismatchException e) {
@@ -96,15 +90,18 @@ public class Main {
      * @param args argumentos passados para o programa
      * @return argumentos que correspondem a algoritmos de paginação
      */
-    private static List<String> coletaAlgoritmos(String[] args) {
-        List<String> algoritmos = new ArrayList<>();
+    private static Collection<String> coletaAlgoritmos(String[] args) {
+        Set<String> algoritmos = new HashSet<>();
         Set<String> algoritmosValidos = Set.of("FCFS", "LRU", "LFU");
         for (String arg : args) {
             if (algoritmosValidos.contains(arg)) {
                 algoritmos.add(arg);
             }
         }
-        return algoritmos;
+        if (!algoritmos.isEmpty()) {
+            return algoritmos;
+        }
+        return algoritmosValidos;
     }
 
     /**
