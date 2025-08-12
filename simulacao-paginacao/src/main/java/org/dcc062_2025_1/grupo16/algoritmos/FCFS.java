@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
-import lombok.SneakyThrows;
 import org.dcc062_2025_1.grupo16.util.Resultado;
 import org.dcc062_2025_1.grupo16.util.Constantes;
 import org.dcc062_2025_1.grupo16.util.Sleeper;
@@ -12,7 +11,6 @@ import org.dcc062_2025_1.grupo16.util.Sleeper;
 public class FCFS implements AlgoritmoSubstituicao {
 
     @Override
-    @SneakyThrows
     public Resultado simula(int[] paginas, int numeroFrames, boolean usaSleeps) {
         Set<Integer> frames = new HashSet<>();
         Queue<Integer> ordem = new LinkedList<>();

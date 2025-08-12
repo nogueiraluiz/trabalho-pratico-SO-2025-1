@@ -5,13 +5,13 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
-import lombok.SneakyThrows;
 import org.dcc062_2025_1.grupo16.algoritmos.AlgoritmoSubstituicao;
 import org.dcc062_2025_1.grupo16.algoritmos.FCFS;
 import org.dcc062_2025_1.grupo16.algoritmos.LFU;
 import org.dcc062_2025_1.grupo16.algoritmos.LRU;
 import org.dcc062_2025_1.grupo16.util.Observador;
 import org.dcc062_2025_1.grupo16.util.Resultado;
+import org.dcc062_2025_1.grupo16.util.Sleeper;
 
 public class Main {
 
@@ -112,10 +112,6 @@ public class Main {
      * @param numeroFrames número de frames na memória física simulada
      */
     private static void simula(String algoritmo, int[] sequencia, int numeroFrames, boolean usaSleeps) {
-        if (algoritmo.isEmpty()) {
-            simulaTodos(sequencia, numeroFrames, usaSleeps);
-            return;
-        }
         switch (algoritmo) {
             case "FCFS":
                 simula(new FCFS(), sequencia, numeroFrames, usaSleeps);
@@ -132,19 +128,6 @@ public class Main {
     }
 
     /**
-     * Simula todos os algoritmos com os mesmos parâmetros de configuração
-     *
-     * @param sequencia    sequência de referências a páginas
-     * @param numeroFrames número de frames na memória física simulada
-     */
-    private static void simulaTodos(int[] sequencia, int numeroFrames, boolean usaSleeps) {
-        observador.limpaResultados();
-        simula(new FCFS(), sequencia, numeroFrames, usaSleeps);
-        simula(new LRU(), sequencia, numeroFrames, usaSleeps);
-        simula(new LFU(), sequencia, numeroFrames, usaSleeps);
-    }
-
-    /**
      * Simula o funcionamento de um algoritmo de substituição de paginas com uma sequência de referências a páginas
      * simulando também a memória física e registra o resultado para comparação ou relatório individual.
      *
@@ -154,11 +137,10 @@ public class Main {
      * @see Observador
      * @see AlgoritmoSubstituicao
      */
-    @SneakyThrows
     private static void simula(AlgoritmoSubstituicao algoritmo, int[] sequencia, int numeroFrames, boolean usaSleep) {
         Resultado resultado = algoritmo.simula(sequencia, numeroFrames, usaSleep);
         observador.registraResultado(algoritmo.getNomeAlgoritmo(), resultado);
-        Thread.sleep(3000);
+        Sleeper.sleep(usaSleep ? 3000 : 0);
     }
 
     /**

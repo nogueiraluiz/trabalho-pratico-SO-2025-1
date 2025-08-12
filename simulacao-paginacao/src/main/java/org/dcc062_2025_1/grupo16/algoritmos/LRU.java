@@ -1,15 +1,13 @@
 package org.dcc062_2025_1.grupo16.algoritmos;
 
 import java.util.LinkedHashMap;
-import lombok.SneakyThrows;
-import org.dcc062_2025_1.grupo16.util.Resultado;
 import org.dcc062_2025_1.grupo16.util.Constantes;
+import org.dcc062_2025_1.grupo16.util.Resultado;
 import org.dcc062_2025_1.grupo16.util.Sleeper;
 
 public class LRU implements AlgoritmoSubstituicao {
 
     @Override
-    @SneakyThrows
     public Resultado simula(int[] paginas, int numeroFrames, boolean usaSleeps) {
         // true para manter ordem LRU
         LinkedHashMap<Integer, Integer> frames = new LinkedHashMap<>(numeroFrames, 0.75f, true);
