@@ -34,10 +34,8 @@ public class Observador {
 
         String menosPageFaults = null;
         String menosSwaps = null;
-//        String maisRapido = null;
         int minPageFaults = Integer.MAX_VALUE;
         int minSwaps = Integer.MAX_VALUE;
-//        long minTempo = Long.MAX_VALUE;
 
         List<Entry<String, Resultado>> sortedEntries = new java.util.ArrayList<>(results.entrySet());
         sortedEntries.sort(Comparator.comparingInt(e -> e.getValue().getPageFaults()));
@@ -60,15 +58,10 @@ public class Observador {
                 menosSwaps = algoritmo;
             }
 
-//            if (resultado.getTempoExecucao() < minTempo) {
-//                minTempo = resultado.getTempoExecucao();
-//                maisRapido = algoritmo;
-//            }
         }
         
         System.out.println("\nMelhor algoritmo em termos de page faults: " + menosPageFaults + " (" + minPageFaults + " page faults)");
         System.out.println("Melhor algoritmo em termos de swaps: " + menosSwaps + " (" + minSwaps + " swaps)");
-//        System.out.println("Algoritmo mais rápido: " + maisRapido + " (" + minTempo + " ms)");
         System.out.println("=====================================\n");
     }
 

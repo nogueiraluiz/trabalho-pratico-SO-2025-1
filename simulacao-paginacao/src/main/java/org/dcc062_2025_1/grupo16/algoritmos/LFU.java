@@ -18,7 +18,6 @@ public class LFU implements AlgoritmoSubstituicao {
         int pageFaults = 0;
 
         System.out.println("Simulando LFU com " + numeroFrames + " frames...");
-        long tempoInicio = System.currentTimeMillis();
 
         for (int pagina : paginas) {
             boolean isHit = frames.contains(pagina);
@@ -56,13 +55,10 @@ public class LFU implements AlgoritmoSubstituicao {
         }
 
         var swaps = pageFaults - frames.size();
-        long tempoExecucao = System.currentTimeMillis() - tempoInicio;
-
         System.out.println("\nLFU - Total de page faults: " + pageFaults);
         System.out.println("Total de swaps: " + swaps);
-//        System.out.println("Tempo de execução: " + tempoExecucao + " ms\n");
-        
-        return new Resultado(getNomeAlgoritmo(), pageFaults, swaps, tempoExecucao);
+
+        return new Resultado(pageFaults, swaps);
     }
 
     @Override

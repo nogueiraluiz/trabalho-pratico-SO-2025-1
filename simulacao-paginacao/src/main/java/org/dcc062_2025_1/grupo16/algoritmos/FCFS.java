@@ -18,7 +18,6 @@ public class FCFS implements AlgoritmoSubstituicao {
         int pageFaults = 0;
 
         System.out.println("Simulando FCFS com " + numeroFrames + " frames...");
-        long tempoInicio = System.currentTimeMillis();
         for (int pagina : paginas) {
             boolean isHit = frames.contains(pagina);
             
@@ -39,14 +38,11 @@ public class FCFS implements AlgoritmoSubstituicao {
             Thread.sleep(Constantes.MILISSEGUNDOS_SLEEP_ITERACOES);
         }
 
-        long tempoExecucao = System.currentTimeMillis() - tempoInicio;
         int swaps = pageFaults - frames.size();
-        
         System.out.println("\nFCFS - Total de page faults: " + pageFaults);
         System.out.println("Total de swaps: " + swaps);
-//        System.out.println("Tempo de execução: " + tempoExecucao + " ms\n");
-        
-        return new Resultado(getNomeAlgoritmo(), pageFaults, swaps, tempoExecucao);
+
+        return new Resultado(pageFaults, swaps);
     }
 
     @Override
