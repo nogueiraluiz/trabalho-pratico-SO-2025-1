@@ -7,15 +7,18 @@ import java.util.Set;
 import lombok.SneakyThrows;
 import org.dcc062_2025_1.grupo16.util.Resultado;
 import org.dcc062_2025_1.grupo16.util.Constantes;
+import org.dcc062_2025_1.grupo16.util.Sleeper;
 
 public class LFU implements AlgoritmoSubstituicao {
 
     @Override
     @SneakyThrows
-    public Resultado simula(int[] paginas, int numeroFrames) {
+    public Resultado simula(int[] paginas, int numeroFrames, boolean usaSleeps) {
         Set<Integer> frames = new LinkedHashSet<>();
         Map<Integer, Integer> frequencias = new HashMap<>();
         int pageFaults = 0;
+        long duracaoSleep = usaSleeps ? Constantes.MILISSEGUNDOS_SLEEP_ITERACOES : 0;
+
 
         System.out.println("Simulando LFU com " + numeroFrames + " frames...");
 
@@ -51,7 +54,7 @@ public class LFU implements AlgoritmoSubstituicao {
 
             System.out.print("Memória: " + String.format("%-" + Constantes.LARGURA_MEMORIA + "s", frames));
             System.out.println(" | Frequências: " + String.format("%-" + Constantes.LARGURA_FREQUENCIA + "s", frequencias));
-            Thread.sleep(Constantes.MILISSEGUNDOS_SLEEP_ITERACOES);
+            Sleeper.sleep(duracaoSleep);
         }
 
         var swaps = pageFaults - frames.size();

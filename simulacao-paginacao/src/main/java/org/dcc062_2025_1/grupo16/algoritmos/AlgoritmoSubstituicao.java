@@ -12,9 +12,10 @@ public interface AlgoritmoSubstituicao {
      *
      * @param paginas número de páginas na memória virtual
      * @param numeroFrames número de frames na memória física
+     * @param usaSleeps opção de usar ou não sleeps na simulação para desacelerar a execução
      * @return {{@link Resultado}} da simulação
      */
-    Resultado simula(int[] paginas, int numeroFrames);
+    Resultado simula(int[] paginas, int numeroFrames, boolean usaSleeps);
     String getNomeAlgoritmo();
 
 }

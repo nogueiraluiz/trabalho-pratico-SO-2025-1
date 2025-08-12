@@ -7,15 +7,17 @@ import java.util.Set;
 import lombok.SneakyThrows;
 import org.dcc062_2025_1.grupo16.util.Resultado;
 import org.dcc062_2025_1.grupo16.util.Constantes;
+import org.dcc062_2025_1.grupo16.util.Sleeper;
 
 public class FCFS implements AlgoritmoSubstituicao {
 
     @Override
     @SneakyThrows
-    public Resultado simula(int[] paginas, int numeroFrames) {
+    public Resultado simula(int[] paginas, int numeroFrames, boolean usaSleeps) {
         Set<Integer> frames = new HashSet<>();
         Queue<Integer> ordem = new LinkedList<>();
         int pageFaults = 0;
+        long duracaoSleep = usaSleeps ? Constantes.MILISSEGUNDOS_SLEEP_ITERACOES : 0;
 
         System.out.println("Simulando FCFS com " + numeroFrames + " frames...");
         for (int pagina : paginas) {
@@ -35,7 +37,7 @@ public class FCFS implements AlgoritmoSubstituicao {
             }
             
             System.out.println("Memória: " + String.format("%-" + Constantes.LARGURA_MEMORIA + "s", frames));
-            Thread.sleep(Constantes.MILISSEGUNDOS_SLEEP_ITERACOES);
+            Sleeper.sleep(duracaoSleep);
         }
 
         int swaps = pageFaults - frames.size();

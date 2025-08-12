@@ -1,7 +1,10 @@
 package org.dcc062_2025_1.grupo16;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Set;
 import lombok.SneakyThrows;
 import org.dcc062_2025_1.grupo16.algoritmos.AlgoritmoSubstituicao;
 import org.dcc062_2025_1.grupo16.algoritmos.FCFS;
@@ -18,6 +21,9 @@ public class Main {
     private static final Observador observador = new Observador();
 
     public static void main(String[] args) {
+        boolean usaSleeps = usaSleep(args);
+        var algoritmos = coletaAlgoritmos(args);
+
         try (Scanner scanner = new Scanner(System.in)) {
             int numeroPaginas;
             int numeroFrames;
@@ -52,11 +58,11 @@ public class Main {
             System.out.println("\n");
 
             if (args.length == 0) {
-                simulaTodos(sequencia, numeroFrames);
+                simulaTodos(sequencia, numeroFrames, usaSleeps);
                 observador.comparaResultados(numeroPaginas, numeroFrames, tamanhoSequencia);
             } else {
-                for (String arg : args) {
-                    simula(arg, sequencia, numeroFrames);
+                for (String arg : algoritmos) {
+                    simula(arg, sequencia, numeroFrames, usaSleeps);
                 }
                 if (args.length > 1) {
                     observador.comparaResultados(numeroPaginas, numeroFrames, tamanhoSequencia);
@@ -70,26 +76,58 @@ public class Main {
     }
 
     /**
+     * Checa se o usuário optou por usar ou não sleeps nas simulações
+     *
+     * @param args argumentos passados para o programa
+     * @return true se o usuário optou por usar sleeps ou false caso contrário
+     */
+    private static boolean usaSleep(String[] args) {
+        String argSleep = "";
+        for (String arg : args) {
+            if (arg.equals("-sleep")) {
+                argSleep = arg;
+                break;
+            }
+        }
+        return argSleep.equals("-sleep");
+    }
+
+    /**
+     * @param args argumentos passados para o programa
+     * @return argumentos que correspondem a algoritmos de paginação
+     */
+    private static List<String> coletaAlgoritmos(String[] args) {
+        List<String> algoritmos = new ArrayList<>();
+        Set<String> algoritmosValidos = Set.of("FCFS", "LRU", "LFU");
+        for (String arg : args) {
+            if (algoritmosValidos.contains(arg)) {
+                algoritmos.add(arg);
+            }
+        }
+        return algoritmos;
+    }
+
+    /**
      * Simula um algoritmo específco ou todos eles com uma a parametrização
      *
-     * @param algoritmo algoritmo a ser simulado ou uma String vazia para simular todos
-     * @param sequencia sequência de referências a páginas
+     * @param algoritmo    algoritmo a ser simulado ou uma String vazia para simular todos
+     * @param sequencia    sequência de referências a páginas
      * @param numeroFrames número de frames na memória física simulada
      */
-    private static void simula(String algoritmo, int[] sequencia, int numeroFrames) {
+    private static void simula(String algoritmo, int[] sequencia, int numeroFrames, boolean usaSleeps) {
         if (algoritmo.isEmpty()) {
-            simulaTodos(sequencia, numeroFrames);
+            simulaTodos(sequencia, numeroFrames, usaSleeps);
             return;
         }
         switch (algoritmo) {
             case "FCFS":
-                simula(new FCFS(), sequencia, numeroFrames);
+                simula(new FCFS(), sequencia, numeroFrames, usaSleeps);
                 break;
             case "LRU":
-                simula(new LRU(), sequencia, numeroFrames);
+                simula(new LRU(), sequencia, numeroFrames, usaSleeps);
                 break;
             case "LFU":
-                simula(new LFU(), sequencia, numeroFrames);
+                simula(new LFU(), sequencia, numeroFrames, usaSleeps);
                 break;
             default:
                 System.out.println("Algoritmo não reconhecido.");
@@ -98,14 +136,15 @@ public class Main {
 
     /**
      * Simula todos os algoritmos com os mesmos parâmetros de configuração
-     * @param sequencia sequência de referências a páginas
+     *
+     * @param sequencia    sequência de referências a páginas
      * @param numeroFrames número de frames na memória física simulada
      */
-    private static void simulaTodos(int[] sequencia, int numeroFrames) {
+    private static void simulaTodos(int[] sequencia, int numeroFrames, boolean usaSleeps) {
         observador.limpaResultados();
-        simula(new FCFS(), sequencia, numeroFrames);
-        simula(new LRU(), sequencia, numeroFrames);
-        simula(new LFU(), sequencia, numeroFrames);
+        simula(new FCFS(), sequencia, numeroFrames, usaSleeps);
+        simula(new LRU(), sequencia, numeroFrames, usaSleeps);
+        simula(new LFU(), sequencia, numeroFrames, usaSleeps);
     }
 
     /**
@@ -119,8 +158,8 @@ public class Main {
      * @see AlgoritmoSubstituicao
      */
     @SneakyThrows
-    private static void simula(AlgoritmoSubstituicao algoritmo, int[] sequencia, int numeroFrames) {
-        Resultado resultado = algoritmo.simula(sequencia, numeroFrames);
+    private static void simula(AlgoritmoSubstituicao algoritmo, int[] sequencia, int numeroFrames, boolean usaSleep) {
+        Resultado resultado = algoritmo.simula(sequencia, numeroFrames, usaSleep);
         observador.registraResultado(algoritmo.getNomeAlgoritmo(), resultado);
         Thread.sleep(3000);
     }
