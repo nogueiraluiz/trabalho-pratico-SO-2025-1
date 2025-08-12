@@ -7,9 +7,14 @@ import org.dcc062_2025_1.grupo16.algoritmos.AlgoritmoSubstituicao;
 import org.dcc062_2025_1.grupo16.algoritmos.FCFS;
 import org.dcc062_2025_1.grupo16.algoritmos.LFU;
 import org.dcc062_2025_1.grupo16.algoritmos.LRU;
+import org.dcc062_2025_1.grupo16.util.Observador;
+import org.dcc062_2025_1.grupo16.util.Resultado;
 
 public class Main {
-    
+
+    /**
+     * Observador que instrumenta os simuladores para obter dados de performance resultados das simulações.
+     */
     private static final Observador observador = new Observador();
 
     public static void main(String[] args) {
@@ -64,6 +69,13 @@ public class Main {
         }
     }
 
+    /**
+     * Simula um algoritmo específco ou todos eles com uma a parametrização
+     *
+     * @param algoritmo algoritmo a ser simulado ou uma String vazia para simular todos
+     * @param sequencia sequência de referências a páginas
+     * @param numeroFrames número de frames na memória física simulada
+     */
     private static void simula(String algoritmo, int[] sequencia, int numeroFrames) {
         if (algoritmo.isEmpty()) {
             simulaTodos(sequencia, numeroFrames);
@@ -84,6 +96,11 @@ public class Main {
         }
     }
 
+    /**
+     * Simula todos os algoritmos com os mesmos parâmetros de configuração
+     * @param sequencia sequência de referências a páginas
+     * @param numeroFrames número de frames na memória física simulada
+     */
     private static void simulaTodos(int[] sequencia, int numeroFrames) {
         observador.limpaResultados();
         simula(new FCFS(), sequencia, numeroFrames);
@@ -91,6 +108,16 @@ public class Main {
         simula(new LFU(), sequencia, numeroFrames);
     }
 
+    /**
+     * Simula o funcionamento de um algoritmo de substituição de paginas com uma sequência de referências a páginas
+     * simulando também a memória física e registra o resultado para comparação ou relatório individual.
+     *
+     * @param algoritmo algoritmo de substituição desejado
+     * @param sequencia sequência de referências a páginas
+     * @param numeroFrames número de frames na memória física simulada
+     * @see Observador
+     * @see AlgoritmoSubstituicao
+     */
     @SneakyThrows
     private static void simula(AlgoritmoSubstituicao algoritmo, int[] sequencia, int numeroFrames) {
         Resultado resultado = algoritmo.simula(sequencia, numeroFrames);
@@ -98,6 +125,13 @@ public class Main {
         Thread.sleep(3000);
     }
 
+    /**
+     * Gera uma sequência de inteiros para simular uma sequência de páginas referenciadas.
+     *
+     * @param numeroPaginas número de páginas na simulação de memória virtual
+     * @param tamanho tamanho desejado para a sequência
+     * @return um vetor de inteiros com a sequência gerada
+     */
     private static int[] geraSequenciaAleatoria(int numeroPaginas, int tamanho) {
         Random random = new Random();
         int[] sequencia = new int[tamanho];

@@ -1,5 +1,10 @@
 package org.dcc062_2025_1.grupo16.util;
 
+/**
+ * Classe não instanciável para armazenamento das constantes usadas no projeto.
+ * <p>
+ * Fornece métodos estáticos utilitários para formatação de impressão dos resultados no terminal.
+ */
 public class Constantes {
 
     private Constantes() {}

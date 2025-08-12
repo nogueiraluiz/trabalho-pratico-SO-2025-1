@@ -2,7 +2,7 @@ package org.dcc062_2025_1.grupo16.algoritmos;
 
 import java.util.LinkedHashMap;
 import lombok.SneakyThrows;
-import org.dcc062_2025_1.grupo16.Resultado;
+import org.dcc062_2025_1.grupo16.util.Resultado;
 import org.dcc062_2025_1.grupo16.util.Constantes;
 
 public class LRU implements AlgoritmoSubstituicao {

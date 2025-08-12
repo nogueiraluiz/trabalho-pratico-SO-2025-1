@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
 import lombok.SneakyThrows;
-import org.dcc062_2025_1.grupo16.Resultado;
+import org.dcc062_2025_1.grupo16.util.Resultado;
 import org.dcc062_2025_1.grupo16.util.Constantes;
 
 public class FCFS implements AlgoritmoSubstituicao {

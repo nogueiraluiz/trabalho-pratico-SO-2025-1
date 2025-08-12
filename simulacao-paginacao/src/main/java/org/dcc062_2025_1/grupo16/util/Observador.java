@@ -1,26 +1,47 @@
-package org.dcc062_2025_1.grupo16;
+package org.dcc062_2025_1.grupo16.util;
 
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import org.dcc062_2025_1.grupo16.util.Constantes;
 
+/**
+ * Classe para observar e registrar resultados de simulações usando os algoritmos de paginação.
+ *
+ * @see Resultado
+ * @see org.dcc062_2025_1.grupo16.algoritmos.AlgoritmoSubstituicao
+ */
 public class Observador {
 
-    private final Map<String, Resultado> results;
+    /**
+     * Mapa para registro dos resultados. Associa o nome do algoritmo ao resultado.
+     */
+    private final Map<String, Resultado> resultados;
 
     public Observador() {
-        this.results = new HashMap<>();
+        this.resultados = new HashMap<>();
     }
 
-    public void registraResultado(String algoritmo, Resultado result) {
-        results.put(algoritmo, result);
+    /**
+     * Guarda o resultado da execução de uma simulação
+     *
+     * @param algoritmo algoritmo usado
+     * @param resultado resultado da simulação
+     */
+    public void registraResultado(String algoritmo, Resultado resultado) {
+        resultados.put(algoritmo, resultado);
     }
 
+    /**
+     * Compara os resultados obtidos nas simulações realizadas usando os parâmetros listados
+     *
+     * @param numeroDePaginas número de páginas na memória virtual usado nas simulações
+     * @param numeroDeFrames número de frames na memória física usado nas simulações
+     * @param tamanhoSequencia tamanho da sequência de referências usado nas simulações
+     */
     public void comparaResultados(int numeroDePaginas, int numeroDeFrames, int tamanhoSequencia) {
-        if (results.isEmpty()) {
+        if (resultados.isEmpty()) {
             System.out.println("Não há resultados para comparar.");
             return;
         }
@@ -37,8 +58,8 @@ public class Observador {
         int minPageFaults = Integer.MAX_VALUE;
         int minSwaps = Integer.MAX_VALUE;
 
-        List<Entry<String, Resultado>> sortedEntries = new java.util.ArrayList<>(results.entrySet());
-        sortedEntries.sort(Comparator.comparingInt(e -> e.getValue().getPageFaults()));
+        List<Entry<String, Resultado>> sortedEntries = new java.util.ArrayList<>(resultados.entrySet());
+        sortedEntries.sort(Comparator.comparingInt(e -> e.getValue().pageFaults()));
 
         for (Map.Entry<String, Resultado> entry : sortedEntries) {
             String algoritmo = entry.getKey();
@@ -46,15 +67,15 @@ public class Observador {
 
             System.out.printf("%-" + Constantes.LARGURA_ALGORITMO + "s%-" +
                     Constantes.LARGURA_PAGE_FAULTS + "d%-" + Constantes.LARGURA_SWAPS + "d%n",
-                    algoritmo, resultado.getPageFaults(), resultado.getSwaps());
+                    algoritmo, resultado.pageFaults(), resultado.swaps());
 
-            if (resultado.getPageFaults() < minPageFaults) {
-                minPageFaults = resultado.getPageFaults();
+            if (resultado.pageFaults() < minPageFaults) {
+                minPageFaults = resultado.pageFaults();
                 menosPageFaults = algoritmo;
             }
 
-            if (resultado.getSwaps() < minSwaps) {
-                minSwaps = resultado.getSwaps();
+            if (resultado.swaps() < minSwaps) {
+                minSwaps = resultado.swaps();
                 menosSwaps = algoritmo;
             }
 
@@ -65,8 +86,11 @@ public class Observador {
         System.out.println("=====================================\n");
     }
 
+    /**
+     * Remove os resultados armazenados
+     */
     public void limpaResultados() {
-        results.clear();
+        resultados.clear();
     }
 
 }

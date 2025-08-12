@@ -1,12 +1,19 @@
 package org.dcc062_2025_1.grupo16.algoritmos;
 
-import org.dcc062_2025_1.grupo16.Resultado;
+import org.dcc062_2025_1.grupo16.util.Resultado;
 
 /**
  * Uma abstração para todos os algoritmos
  */
 public interface AlgoritmoSubstituicao {
 
+    /**
+     * Simula o comportamento de um algoritmo de substituição de páginas
+     *
+     * @param paginas número de páginas na memória virtual
+     * @param numeroFrames número de frames na memória física
+     * @return {{@link Resultado}} da simulação
+     */
     Resultado simula(int[] paginas, int numeroFrames);
     String getNomeAlgoritmo();
 
